@@ -20,7 +20,8 @@
 .test{
     display: flex;
     flex-direction: row-reverse;
-    background-color: red;
 }
 
-
+.Calendar{
+    margin: 5%;
+}

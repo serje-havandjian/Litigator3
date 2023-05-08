@@ -2,6 +2,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Snackbar } from '@mui/material';
 import ResponsiveDrawer from "./Drawer";
+import React from 'react'
+import Calendar from "./Calendar";
+
+
+
+
+
 
 
 
@@ -21,8 +28,10 @@ const [open, setOpen] = useState();
 
     return(
        <>
+       <div className="Calendar">
+        <Calendar />
+        </div>
         <ResponsiveDrawer >
-
         </ResponsiveDrawer>
         
 
