@@ -2,6 +2,7 @@ import { Route, Switch } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home"
 import CaseDetails from "./CaseDetails";
+import Calendar from "./Calendar";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route exact path ="/matter">
             <CaseDetails />
+          </Route>
+          <Route exact path ="/calendar">
+            <Calendar />
           </Route>
         </Switch>
     </div>

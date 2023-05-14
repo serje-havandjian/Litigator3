@@ -3,25 +3,56 @@
 .matterContainer{
     margin-top: 3%;
 }
+
 .caseDetails{
    /* margin-top: 5%; */
     background-color: rgba(232, 235, 239);
     border-radius: 5px;
-
+    width: 100%;
 }
 
 .caseDetailsHover{
    /* margin-top: 5%; */
     background-color: rgb(217, 219, 223);
     border-radius: 5px;
-   
+    width: 100%;
 }
 
-.test{
-    display: flex;
-    flex-direction: row-reverse;
-}
+
 
 .Calendar{
+    float: right;
+    width: 60%;
     margin: 5%;
+    padding-top: 5%;
+    position: sticky;
+    top: 0;
+}
+
+.Accordian {
+    margin-top: 2%;
+}
+
+.addDeadline{
+    float: right;
+}
+
+.deadlineTextBoxes{
+    width: 500px;
+}
+
+/* .bottomDrawer{
+    transform: translate(20%, 30%);
+    margin-bottom: 15%;
+    margin-left: 15%;
+
+} */
+
+.drawerFields{
+    width: 40%;
+}
+
+.drawerContainer{
+    margin-left: 5%;
+    margin-bottom: 2%;
 }
