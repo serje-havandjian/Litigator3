@@ -3,6 +3,9 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
 
 export default function AddDeadline() {
   const [state, setState] = React.useState({
@@ -36,14 +39,20 @@ export default function AddDeadline() {
       >
         {list}
       
-      <Box className='drawerContainer'>
-        <h3>Add Deadline</h3>
-      
-        <TextField className='drawerFields' id="outlined-basic" label="Trigger" variant="outlined"/>
-        <br></br>
-        <br></br>
-        <TextField className='drawerFields' id="outlined-basic" label="Trigger Date" variant="outlined" />
-      </Box>
+        <Paper className='drawerContainer' >
+            <div className='drawerContent'>
+                <h3>Add Deadline</h3>
+                <TextField className='drawerFields' id="outlined-basic" label="Trigger" variant="outlined"/>
+                <br></br>
+                <br></br>
+                <TextField className='drawerFields' id="outlined-basic" label="Trigger Date" variant="outlined" />
+                <br></br>
+                <br></br>
+                <Button>Submit</Button>
+            </div>
+        </Paper>
+                 
+ 
      
       </Drawer>
     </div>
