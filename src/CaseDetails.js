@@ -92,11 +92,7 @@ function CaseDetails() {
     )
   })
 
-    return(
-      <div className='matterContainer'>
-      <h1>TEST</h1>
-      </div>
-    )
+  
   }
 
 

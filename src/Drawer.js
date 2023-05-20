@@ -29,6 +29,7 @@ import InputBase from '@mui/material/InputBase';
 
 
 import Matter from './Matter';
+import AddMatter from './AddMatter';
 
 const drawerWidth = 240;
 
@@ -134,6 +135,11 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
 
+  
+
+
+
+
 
 
 export default function MiniDrawer() {
@@ -150,6 +156,18 @@ export default function MiniDrawer() {
   };
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
+const [state, setState] = React.useState({
+  bottom: false,
+});
+
+const toggleDrawer = (open) => (event) => {
+  if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    return;
+  }
+
+  setState({ ...state, bottom: open });
+};
 
 
   return (
@@ -241,8 +259,9 @@ const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
                   }}
-                >
-                     <AddIcon />
+                > 
+                     <AddMatter></AddMatter>
+                     
                 </ListItemIcon>
                 <ListItemText primary={"Create Matter"}  sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
