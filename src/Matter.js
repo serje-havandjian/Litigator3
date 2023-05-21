@@ -124,16 +124,11 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
                     <div className="addDeadline">
                       <AddDeadline />
                     </div>
-                
                  
                       <Button onClick={handleDetailsClick} >
                         DETAILS
                       </Button>
-               
-                    
-                 
-                    
-                    
+              
                   </AccordionDetails>
               </Accordion>
           </Paper>

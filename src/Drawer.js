@@ -31,7 +31,7 @@ import InputBase from '@mui/material/InputBase';
 import Matter from './Matter';
 import AddMatter from './AddMatter';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 
 const openedMixin = (theme) => ({
@@ -199,7 +199,7 @@ const toggleDrawer = (open) => (event) => {
               inputProps={{ 'aria-label': 'search' }}
             />
         </Search>
-        <div className='Header'>
+        <div className='copilotHeader'>
             <Typography variant="h4" marginLeft={100}>
             copilot
             </Typography>
