@@ -8,16 +8,19 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Button} from '@mui/material';
+import { useHistory } from "react-router-dom";
 
 import AddDeadline from './AddDeadline';
+import CaseDetails from './CaseDetails';
 
 
 
-function Matter() {
+function Matter({allMatters,setAllMatters, handleMatterDetail}) {
 
-  const [allMatters, setAllMatters] = useState([])
+
+  
   const [hoverIndex, setHoverIndex] = useState(null);
-  const [open, setOpen] = useState(false);
+
   
 
   const handleMouseEnter = (index) => {
@@ -28,9 +31,12 @@ function Matter() {
     setHoverIndex(null);
   };
 
-  const handleMatterDetail = (e) =>{
-    console.log(e.target.id)
-  }
+ 
+
+    // Redirect to MatterDetail page passing the matter index as a parameter
+   
+
+
 
   
   useEffect(()=>{
@@ -46,10 +52,10 @@ function Matter() {
     return(
       <>
       <div className='Accordian' >
-          <Paper >
+          <Paper onClick={handleMatterDetail}>
             <Accordion >
               <AccordionSummary>
-                <div id={index} onClick={handleMatterDetail} className={backgroundColor}  
+                <div id={index}  className={backgroundColor}  
                     onMouseEnter={() => handleMouseEnter(index)}
                     onMouseLeave={handleMouseLeave}>
                     <Box sx={{
@@ -62,8 +68,10 @@ function Matter() {
                         textDecorationColor: 'gray',
                       }
                       }} >
-                      <Typography >
+                      <Typography color={'blue'} >
+                        
                         Title: {matter.title}
+                       
                       </Typography> 
                     </Box>
                     <Box sx={{
@@ -124,6 +132,7 @@ function Matter() {
       <div className='matterContainer'>
       {displayAllMatters}
       </div>
+     
       </>
     )
   }

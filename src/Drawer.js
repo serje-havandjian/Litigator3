@@ -34,9 +34,6 @@ import AddMatter from './AddMatter';
 const drawerWidth = 240;
 
 
-
-
-
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -142,7 +139,7 @@ const Search = styled('div')(({ theme }) => ({
 
 
 
-export default function MiniDrawer() {
+export default function MiniDrawer({allMatters, setAllMatters, handleMatterDetail}) {
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -204,7 +201,7 @@ const toggleDrawer = (open) => (event) => {
         </Search>
         <div className='Header'>
             <Typography variant="h4" marginLeft={100}>
-            Litigator
+            copilot
             </Typography>
         </div>
         </Toolbar>
@@ -311,7 +308,7 @@ const toggleDrawer = (open) => (event) => {
       </Drawer>
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Matter />
+        <Matter allMatters={allMatters} setAllMatters={setAllMatters} handleMatterDetail={handleMatterDetail} />
       </Box>
     </Box>
   );

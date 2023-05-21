@@ -12,7 +12,7 @@ import Calendar from "./Calendar";
 
 
 
-function Home() {
+function Home({allMatters, setAllMatters, handleMatterDetail}) {
 const [open, setOpen] = useState();
 
 
@@ -31,11 +31,11 @@ const [open, setOpen] = useState();
        <div className="Calendar">
         <Calendar />
         </div>
-        <ResponsiveDrawer >
+        <ResponsiveDrawer allMatters={allMatters} setAllMatters={setAllMatters} handleMatterDetail={handleMatterDetail} >
         </ResponsiveDrawer>
         
 
-        <h1 onClick={handleClick} className="Header">Test</h1>
+        
         <Snackbar
           open={open}
           onClick={handleClick}
