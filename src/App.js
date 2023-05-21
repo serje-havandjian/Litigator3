@@ -24,8 +24,10 @@ function App() {
 
 
   const handleMatterDetail = (index) => {
-    setTrackIndex(parseInt(index.target.id));
-    // history.push(`/casedetails/${index.target.id}`);
+    // setTrackIndex(parseInt(index.target.id));
+    history.push(`/casedetails/${index}`);
+
+    console.log(index)
   };
 
   useEffect(() => {
@@ -37,13 +39,12 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    if (trackIndex !== null && allMatters.length > 0) {
-      const thisMatter = allMatters[trackIndex];
-      // Do something with thisMatter, such as updating a state variable
-      console.log(thisMatter, "TEST");
-    }
-  }, [trackIndex, allMatters]);
+  // useEffect(() => {
+  //   if (trackIndex !== null && allMatters.length > 0) {
+  //     const thisMatter = allMatters[trackIndex];
+     
+  //   }
+  // }, [trackIndex, allMatters]);
  
 
 

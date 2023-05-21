@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 
 import AddDeadline from './AddDeadline';
 import CaseDetails from './CaseDetails';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
@@ -48,12 +49,16 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
 
     const displayAllMatters = allMatters.map((matter, index)=>{
     const backgroundColor = hoverIndex === index ? 'caseDetailsHover' : 'caseDetails';
+    
+    const handleDetailsClick = () => {
+      handleMatterDetail(matter.id);
+    };
 
     return(
       <>
       <div className='Accordian' >
-          <Paper onClick={handleMatterDetail}>
-            <Accordion >
+          <Paper >
+            <Accordion  >
               <AccordionSummary>
                 <div id={index}  className={backgroundColor}  
                     onMouseEnter={() => handleMouseEnter(index)}
@@ -68,7 +73,7 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
                         textDecorationColor: 'gray',
                       }
                       }} >
-                      <Typography color={'blue'} >
+                      <Typography >
                         
                         Title: {matter.title}
                        
@@ -108,6 +113,7 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
                       <Typography> Jurisdiction: {matter.jurisdiction.name}</Typography>
                       </Typography> 
                     </Box>
+                    
                   </div>  
                   </AccordionSummary>
                   <AccordionDetails>
@@ -118,6 +124,15 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
                     <div className="addDeadline">
                       <AddDeadline />
                     </div>
+                
+                 
+                      <Button onClick={handleDetailsClick} >
+                        DETAILS
+                      </Button>
+               
+                    
+                 
+                    
                     
                   </AccordionDetails>
               </Accordion>
