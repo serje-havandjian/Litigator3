@@ -61,7 +61,7 @@ function CaseDetails({allMatters,trackIndex}) {
   if(thisMatter){
     return(
    <>
-    <div className='caseDetailsContainer'>
+   
      <Box >
       <CssBaseline />
       <AppBar position="fixed" >
@@ -80,18 +80,17 @@ function CaseDetails({allMatters,trackIndex}) {
 
       </Toolbar>
       </AppBar>
-      </Box>
+    </Box>
 
-     
-
-      <div className='milestones'>
-      <h3>Milestones</h3>
-    </div>
-
-    </div>
-    <div className='Calendar'>
+ 
+      <h3 className='milestones'>Milestones</h3>
+    
+   
+    <div className='Calendar' >
+      
         <Calendar />
-      </div>
+      
+    </div>
    
     </>
       

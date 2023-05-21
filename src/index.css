@@ -66,8 +66,9 @@
 }
 
 .milestones{
-    margin-top: 25%;
-    width: 20%;
+    margin-top: 10%;
+    float: left;
+    margin-left: 5%;
 }
 
 .caseDetailsContainer{

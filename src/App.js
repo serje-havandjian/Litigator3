@@ -53,7 +53,7 @@ function App() {
 
 
   return (
-    <div >
+    < >
         <Switch>
           <Route exact path ="/">
             <Home allMatters={allMatters} setAllMatters={setAllMatters} handleMatterDetail={handleMatterDetail} />
@@ -67,10 +67,8 @@ function App() {
           <Route exact path ="/calendar">
             <Calendar />
           </Route>
-         
-          
         </Switch>
-    </div>
+    </>
   );
 }
 
