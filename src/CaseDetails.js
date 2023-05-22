@@ -5,12 +5,18 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { styled } from '@mui/material/styles';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Paper from '@mui/material/Paper';
 import Calendar from './Calendar';
 
 import Box from '@mui/material/Box';
 
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
 
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -20,19 +26,41 @@ import CssBaseline from '@mui/material/CssBaseline';
 function CaseDetails({allMatters,trackIndex}) {
 
   const history = useHistory()
+  const { id } = useParams()
+
+  const [milestones, setMilestones] = useState()
+
+  useEffect(() => {
+    fetch("http://localhost:8000/milestones")
+      .then((response) => response.json())
+      .then((data) => setMilestones(data))
+      .catch((error) => {
+        console.error("Error fetching matters:", error);
+      });
+
+  }, []);
+
+  console.log(milestones, "MILESTONES HERE")
+
+  let displayMilestones
+
+  if(milestones){
+    displayMilestones = milestones.map((milestone)=>{
+      return(
+
+        <FormControlLabel control={<Checkbox defaultChecked />} label={milestone.title} />
+      )
+    })
+  }
+  
 
   const goHome = () => {
-    // setTrackIndex(parseInt(index.target.id));
     history.push(`/`);
-
-
   };
 
-  const { id } = useParams()
 
   const thisMatter = allMatters.find((matter) => matter.id === parseInt(id));
   const drawerWidth = 240;
-
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -58,7 +86,7 @@ function CaseDetails({allMatters,trackIndex}) {
   console.log(thisMatter);
   console.log(id);
 
-  if(thisMatter){
+  if(thisMatter && milestones){
     return(
    <>
    
@@ -83,13 +111,19 @@ function CaseDetails({allMatters,trackIndex}) {
     </Box>
 
  
-      <h3 className='milestones'>Milestones</h3>
+    <div className='milestones-container'>
+          <h3 className='milestoneHeader'>Milestones</h3>
+          <ul className='milestones-list'>
+            <Paper>
+           {displayMilestones}
+           </Paper>
+          </ul>
+        </div>
+
     
    
     <div className='Calendar' >
-      
-        <Calendar />
-      
+      <Calendar />
     </div>
    
     </>

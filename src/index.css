@@ -65,12 +65,26 @@
     margin-left: auto;
 }
 
-.milestones{
+/* .milestoneHeader{
     margin-top: 10%;
     float: left;
     margin-left: 5%;
 }
 
-.caseDetailsContainer{
-    width: 30%;
+.milestones{
+    margin-top: 15%;
+    margin-left: 5%;
+    width: 15%;
+    float: left;
+} */
+
+.milestoneHeader{
+    margin-left: 5%;
 }
+
+.milestones-container{
+    margin-top: 10%;
+    width: 30%;
+    float: left;
+}
+

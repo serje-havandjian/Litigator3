@@ -39,6 +39,9 @@ function App() {
       });
   }, []);
 
+ 
+
+
   // useEffect(() => {
   //   if (trackIndex !== null && allMatters.length > 0) {
   //     const thisMatter = allMatters[trackIndex];
@@ -53,7 +56,7 @@ function App() {
 
 
   return (
-    < >
+    <>
         <Switch>
           <Route exact path ="/">
             <Home allMatters={allMatters} setAllMatters={setAllMatters} handleMatterDetail={handleMatterDetail} />
