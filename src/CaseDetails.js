@@ -21,6 +21,33 @@ import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 
 
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginRight: 240,
+    width: `calc(100% - ${240}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
 
 
 function CaseDetails({allMatters,trackIndex}) {
@@ -60,25 +87,9 @@ function CaseDetails({allMatters,trackIndex}) {
 
 
   const thisMatter = allMatters.find((matter) => matter.id === parseInt(id));
-  const drawerWidth = 240;
 
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-  })(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-      marginRight: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
+
+
 
 
 
@@ -90,9 +101,10 @@ function CaseDetails({allMatters,trackIndex}) {
     return(
    <>
    
+   <DrawerHeader>
      <Box >
       <CssBaseline />
-      <AppBar position="fixed" >
+      <AppBar position="fixed">
         <Toolbar>
         <div className='matterDetailsHeader'>
           <Typography onClick={goHome}>
@@ -105,27 +117,38 @@ function CaseDetails({allMatters,trackIndex}) {
         copilot
         </Typography>
       </div>
-
       </Toolbar>
       </AppBar>
     </Box>
 
- 
-    <div className='milestones-container'>
+      <div className='milestones-container'>
+        <Box sx={{ flexGrow: 1, p: 3 }}>
+        <div >
           <h3 className='milestoneHeader'>Milestones</h3>
           <ul className='milestones-list'>
-            <Paper>
-           {displayMilestones}
+            <Paper >
+            <div className='milestoneCard'>
+              <h3>Demurrer</h3>
+              {displayMilestones}
+            </div>           
            </Paper>
+           <Paper>
+           <div className='milestoneCard'>
+              <h3>MSJ</h3>
+              {displayMilestones}
+            </div>
+            </Paper>
           </ul>
         </div>
-
-    
+        </Box>
+      </div>
+  
    
     <div className='Calendar' >
       <Calendar />
     </div>
-   
+    </DrawerHeader>
+ 
     </>
       
     

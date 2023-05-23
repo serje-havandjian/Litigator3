@@ -83,8 +83,12 @@
 }
 
 .milestones-container{
-    margin-top: 10%;
+
     width: 30%;
     float: left;
 }
 
+.milestoneCard{
+    padding: 5%;
+    margin: 10%;
+}

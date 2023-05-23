@@ -33,16 +33,6 @@ const [open, setOpen] = useState();
         </div>
         <ResponsiveDrawer allMatters={allMatters} setAllMatters={setAllMatters} handleMatterDetail={handleMatterDetail} >
         </ResponsiveDrawer>
-        
-
-        
-        <Snackbar
-          open={open}
-          onClick={handleClick}
-          onClose={handleClose}
-          autoHideDuration={6000}
-          message="Note archived"
-        />
        </>
     ) 
 
