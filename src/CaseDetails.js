@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import {Typography} from '@mui/material';
+import { useTheme, alpha } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { styled } from '@mui/material/styles';
@@ -44,14 +45,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
+  // // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
 
 
 function CaseDetails({allMatters,trackIndex}) {
-
+  const theme = useTheme();
   const history = useHistory()
   const { id } = useParams()
 
@@ -99,7 +100,7 @@ function CaseDetails({allMatters,trackIndex}) {
 
   if(thisMatter && milestones){
     return(
-   <>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
    
    <DrawerHeader>
      <Box >
@@ -122,8 +123,7 @@ function CaseDetails({allMatters,trackIndex}) {
     </Box>
 
       <div className='milestones-container'>
-        <Box sx={{ flexGrow: 1, p: 3 }}>
-        <div >
+        <Box >
           <h3 className='milestoneHeader'>Milestones</h3>
           <ul className='milestones-list'>
             <Paper >
@@ -138,18 +138,31 @@ function CaseDetails({allMatters,trackIndex}) {
               {displayMilestones}
             </div>
             </Paper>
+            <Paper>
+           <div className='milestoneCard'>
+              <h3>MSJ</h3>
+              {displayMilestones}
+            </div>
+            </Paper>
+            <Paper>
+           <div className='milestoneCard'>
+              <h3>MSJ</h3>
+              {displayMilestones}
+            </div>
+            </Paper>
           </ul>
-        </div>
+          
         </Box>
       </div>
+      
   
    
-    <div className='Calendar' >
+    <Box  className='Calendar Cal2' >
       <Calendar />
-    </div>
+    </Box>
     </DrawerHeader>
  
-    </>
+    </Box>
       
     
  
