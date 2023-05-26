@@ -81,10 +81,15 @@
 .milestones-container{
     margin-top: 5%;
     width: 30%;
-    float: left;
+    
 }
 
 .milestoneCard{
+    margin: 5%;
+   
+}
+
+.milestones-list{
     margin: 5%;
 }
 
@@ -92,3 +97,4 @@
     margin-top: 5%;
     margin-bottom: auto
 }
+

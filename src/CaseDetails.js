@@ -75,7 +75,7 @@ function CaseDetails({allMatters,trackIndex}) {
   if(milestones){
     displayMilestones = milestones.map((milestone)=>{
       return(
-
+        
         <FormControlLabel control={<Checkbox defaultChecked />} label={milestone.title} />
       )
     })
@@ -89,78 +89,71 @@ function CaseDetails({allMatters,trackIndex}) {
 
   const thisMatter = allMatters.find((matter) => matter.id === parseInt(id));
 
-
-
-
-
-
-
-  console.log(thisMatter);
-  console.log(id);
-
   if(thisMatter && milestones){
     return(
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
    
-   <DrawerHeader>
-     <Box >
-      <CssBaseline />
-      <AppBar position="fixed">
-        <Toolbar>
-        <div className='matterDetailsHeader'>
-          <Typography onClick={goHome}>
-          {thisMatter.title}
-          </Typography>
-        </div>
+      <DrawerHeader>
 
-      <div className='copilotHeader'>
-        <Typography variant="h4">
-        copilot
-        </Typography>
-      </div>
-      </Toolbar>
-      </AppBar>
-    </Box>
-
-      <div className='milestones-container'>
+        
         <Box >
-          <h3 className='milestoneHeader'>Milestones</h3>
-          <ul className='milestones-list'>
-            <Paper >
-            <div className='milestoneCard'>
-              <h3>Demurrer</h3>
-              {displayMilestones}
-            </div>           
-           </Paper>
-           <Paper>
-           <div className='milestoneCard'>
-              <h3>MSJ</h3>
-              {displayMilestones}
+          <CssBaseline />
+          <AppBar position="fixed">
+            <Toolbar>
+            <div className='matterDetailsHeader'>
+              <Typography onClick={goHome}>
+              {thisMatter.title}
+              </Typography>
             </div>
-            </Paper>
-            <Paper>
-           <div className='milestoneCard'>
-              <h3>MSJ</h3>
-              {displayMilestones}
-            </div>
-            </Paper>
-            <Paper>
-           <div className='milestoneCard'>
-              <h3>MSJ</h3>
-              {displayMilestones}
-            </div>
-            </Paper>
-          </ul>
-          
+
+          <div className='copilotHeader'>
+            <Typography variant="h4">
+            copilot
+            </Typography>
+          </div>
+          </Toolbar>
+          </AppBar>
         </Box>
-      </div>
+
+        <div className='milestones-container'>
+          <Box >
+            <h3 className='milestoneHeader'>Milestones</h3>
+            <ul className='milestones-list'>
+              <Paper >
+              <div className='milestoneCard'>
+                <h3>Demurrer</h3>
+                {displayMilestones}
+              </div>           
+            </Paper>
+            <Paper>
+            <div className='milestoneCard'>
+                <h3>MSJ</h3>
+                {displayMilestones}
+              </div>
+              </Paper>
+              <Paper>
+            <div className='milestoneCard'>
+                <h3>MSJ</h3>
+                {displayMilestones}
+              </div>
+              </Paper>
+              <Paper>
+            <div className='milestoneCard'>
+                <h3>MSJ</h3>
+                {displayMilestones}
+              </div>
+              </Paper>
+            </ul>
+            
+          </Box>
+        </div>
       
   
    
-    <Box  className='Calendar Cal2' >
-      <Calendar />
-    </Box>
-    </DrawerHeader>
+        <Box  className='Calendar Cal2' >
+          <Calendar />
+        </Box>
+      </DrawerHeader>
  
     </Box>
       

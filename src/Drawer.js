@@ -27,12 +27,10 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import InputBase from '@mui/material/InputBase';
 
-
 import Matter from './Matter';
 import AddMatter from './AddMatter';
 
 const drawerWidth = 200;
-
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -100,49 +98,40 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    width: '30%',
-   
-  }));
-  
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  width: '30%',
+}));
 
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      
-    },
-  }));
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
-  
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+  },
+}));
 
-
-
-
-
-
-export default function MiniDrawer({allMatters, setAllMatters, handleMatterDetail}) {
-
+export default function MiniDrawer({ allMatters, setAllMatters, handleMatterDetail }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -152,60 +141,51 @@ export default function MiniDrawer({allMatters, setAllMatters, handleMatterDetai
     setOpen(false);
   };
 
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
-const [state, setState] = React.useState({
-  bottom: false,
-});
-
-const toggleDrawer = (open) => (event) => {
-  if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-    return;
-  }
-
-  setState({ ...state, bottom: open });
-};
-
+  const filteredMatters = allMatters.filter((matter) =>
+    matter.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1 }}>
       <CssBaseline />
-      <Box  sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'}}>
-            
-      <AppBar position="fixed" open={open} >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              height: 1,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>  
-          <Search >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-        </Search>
-        <div className='copilotHeader'>
-            <Typography variant="h4" marginLeft={100}>
-            copilot
-            </Typography>
-        </div>
-        </Toolbar>
-      </AppBar>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <AppBar position="fixed" open={open}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                height: 1,
+                ...(open && { display: 'none' }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                value={searchQuery}
+                onChange={handleSearchChange}
+              />
+            </Search>
+            <div className="copilotHeader">
+              <Typography variant="h4" marginLeft={100}>
+                copilot
+              </Typography>
+            </div>
+          </Toolbar>
+        </AppBar>
       </Box>
 
       <Drawer variant="permanent" open={open}>
@@ -240,8 +220,8 @@ const toggleDrawer = (open) => (event) => {
           ))}
         </List>
         <Divider />
-        <div className='loginButton'>
-        <List>
+        <div className="loginButton">
+          <List>
             <ListItem disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -256,11 +236,10 @@ const toggleDrawer = (open) => (event) => {
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
                   }}
-                > 
-                     <AddMatter></AddMatter>
-                     
+                >
+                  <AddMatter />
                 </ListItemIcon>
-                <ListItemText primary={"Create Matter"}  sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"Create Matter"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding sx={{ display: 'block' }}>
@@ -278,9 +257,9 @@ const toggleDrawer = (open) => (event) => {
                     justifyContent: 'center',
                   }}
                 >
-                     <LoginIcon />
+                  <LoginIcon />
                 </ListItemIcon>
-                <ListItemText primary={"Login"}  sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"Login"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding sx={{ display: 'block' }}>
@@ -298,17 +277,21 @@ const toggleDrawer = (open) => (event) => {
                     justifyContent: 'center',
                   }}
                 >
-                     <LogoutIcon />
+                  <LogoutIcon />
                 </ListItemIcon>
-                <ListItemText primary={"Logout"}  sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={"Logout"} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-        </List>
+          </List>
         </div>
       </Drawer>
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Matter allMatters={allMatters} setAllMatters={setAllMatters} handleMatterDetail={handleMatterDetail} />
+        <Matter
+          allMatters={filteredMatters}
+          setAllMatters={setAllMatters}
+          handleMatterDetail={handleMatterDetail}
+        />
       </Box>
     </Box>
   );
