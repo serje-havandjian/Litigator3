@@ -41,7 +41,7 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
 
   
   useEffect(()=>{
-    fetch("http://localhost:8000/")
+    fetch("http://127.0.0.1:5001/copilot-f86e2/us-central1/app/")
     .then(result => result.json())
     .then(res => setAllMatters(res) )
   }, [])

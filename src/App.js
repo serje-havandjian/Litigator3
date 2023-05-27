@@ -31,7 +31,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8000/")
+    fetch("http://127.0.0.1:5001/copilot-f86e2/us-central1/app/")
       .then((response) => response.json())
       .then((data) => setAllMatters(data))
       .catch((error) => {
@@ -39,6 +39,7 @@ function App() {
       });
   }, []);
 
+  console.log(allMatters)
  
 
 
