@@ -152,7 +152,7 @@ export default function MiniDrawer({ allMatters, setAllMatters, handleMatterDeta
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1 }}>
       <CssBaseline />
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Box >
         <AppBar position="fixed" open={open}>
           <Toolbar>
             <IconButton
@@ -168,7 +168,7 @@ export default function MiniDrawer({ allMatters, setAllMatters, handleMatterDeta
             >
               <MenuIcon />
             </IconButton>
-            <Search>
+            <Search className='searchBar2'>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>

@@ -14,6 +14,10 @@ import AddDeadline from './AddDeadline';
 import CaseDetails from './CaseDetails';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
+import {db} from "./firebase"
+import { queries } from '@testing-library/react';
+
+import {query, collection, getDocs} from 'firebase/firestore'
 
 
 function Matter({allMatters,setAllMatters, handleMatterDetail}) {
@@ -41,110 +45,127 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
 
   
   useEffect(()=>{
-    fetch("http://127.0.0.1:5001/copilot-f86e2/us-central1/app/")
-    .then(result => result.json())
-    .then(res => setAllMatters(res) )
+    const fetchData = async () => {
+      let list = []
+      const q = query(collection(db, 'matters'))
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc)=>{
+        list.push({id: doc.id, ...doc.data() })
+      })
+      setAllMatters(list)
+     
+    }
+    
+    fetchData()
+    
   }, [])
 
+  console.log(allMatters)
 
-    const displayAllMatters = allMatters.map((matter, index)=>{
-    const backgroundColor = hoverIndex === index ? 'caseDetailsHover' : 'caseDetails';
-    
-    const handleDetailsClick = () => {
-      handleMatterDetail(matter.id);
-    };
+  let displayAllMatters
 
-    return(
-      <>
-      <div className='Accordian' >
-          <Paper >
-            <Accordion  >
-              <AccordionSummary>
-                <div id={index}  className={backgroundColor}  
-                    onMouseEnter={() => handleMouseEnter(index)}
-                    onMouseLeave={handleMouseLeave}>
-                    <Box sx={{
-                      p: 1,
-                      m: 1,
-                      color:'gray',
-                      '&:hover': {
-                        color:'black',
-                        textDecoration: 'underline',
-                        textDecorationColor: 'gray',
-                      }
-                      }} >
-                      <Typography >
-                        
-                        Title: {matter.title}
-                       
-                      </Typography> 
-                    </Box>
-                    <Box sx={{
-                      p: 1,
-                      m: 1,
-                      color:'gray',
-                      '&:hover': {
-                        color:'black',
-                        textDecoration: 'underline',
-                        textDecorationColor: 'gray',
-                      }
-                      }} >
+  if(allMatters){
+     displayAllMatters = allMatters.map((matter)=>{
+      
+      const backgroundColor = hoverIndex === matter.id ? 'caseDetailsHover' : 'caseDetails';
+      
+      const handleDetailsClick = () => {
+        handleMatterDetail(matter.id);
+      };
+  
+      return(
+        <>
+        <div className='Accordian' >
+            <Paper >
+              <Accordion  >
+                <AccordionSummary>
+                  <div   className={backgroundColor}  
+                      onMouseEnter={() => handleMouseEnter(matter.id)}
+                      onMouseLeave={handleMouseLeave}>
+                      <Box sx={{
+                        p: 1,
+                        m: 1,
+                        color:'gray',
+                        '&:hover': {
+                          color:'black',
+                          textDecoration: 'underline',
+                          textDecorationColor: 'gray',
+                        }
+                        }} >
+                        <Typography >
+                          
+                          Title: {matter.title}
+                         
+                        </Typography> 
+                      </Box>
+                      <Box sx={{
+                        p: 1,
+                        m: 1,
+                        color:'gray',
+                        '&:hover': {
+                          color:'black',
+                          textDecoration: 'underline',
+                          textDecorationColor: 'gray',
+                        }
+                        }} >
+                        {/* <Typography>
+                          Opposing Counsel: {matter.opposingCounsels.map((counsel)=>{
+                            return(
+                              <>
+                              {counsel.name}
+                              </>
+                            )
+                          })}
+                        </Typography>  */}
+                      </Box>
+                      <Box sx={{
+                        p: 1,
+                        m: 1,
+                        color:'gray',
+                        '&:hover': {
+                          color:'black',
+                          textDecoration: 'underline',
+                          textDecorationColor: 'gray',
+                        }
+                        }} >
+                        <Typography>
+                        <Typography> Trial Date: {matter.trialDate}</Typography>
+                        </Typography> 
+                      </Box>
+                      
+                    </div>  
+                    </AccordionSummary>
+                    <AccordionDetails>
                       <Typography>
-                        Opposing Counsel: {matter.opposingCounsels.map((counsel)=>{
-                          return(
-                            <>
-                            {counsel.name}
-                            </>
-                          )
-                        })}
-                      </Typography> 
-                    </Box>
-                    <Box sx={{
-                      p: 1,
-                      m: 1,
-                      color:'gray',
-                      '&:hover': {
-                        color:'black',
-                        textDecoration: 'underline',
-                        textDecorationColor: 'gray',
-                      }
-                      }} >
-                      <Typography>
-                      <Typography> Jurisdiction: {matter.jurisdiction.name}</Typography>
-                      </Typography> 
-                    </Box>
-                    
-                  </div>  
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                      malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
-                    <div className="addDeadline">
-                      <AddDeadline />
-                    </div>
-                 
-                      <Button onClick={handleDetailsClick} >
-                        DETAILS
-                      </Button>
-              
-                  </AccordionDetails>
-              </Accordion>
-          </Paper>
-    </div>
-    </>
-    )
-  })
-
-    return(
-      <>
-      <div className='matterContainer'>
-      {displayAllMatters}
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                      </Typography>
+                      <div className="addDeadline">
+                        <AddDeadline />
+                      </div>
+                   
+                        <Button onClick={handleDetailsClick} >
+                          DETAILS
+                        </Button>
+                
+                    </AccordionDetails>
+                </Accordion>
+            </Paper>
       </div>
-     
       </>
-    )
+      )
+    })
+  }
+  
+  return(
+    <>
+    <div className='matterContainer'>
+    {displayAllMatters}
+    </div>
+   
+    </>
+  )
+    
   }
 
 

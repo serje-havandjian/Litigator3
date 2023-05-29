@@ -2,6 +2,7 @@
 
 .matterContainer{
     margin-top: 3%;
+    
 }
 
 .caseDetails{
@@ -81,12 +82,18 @@
 .milestones-container{
     margin-top: 5%;
     width: 30%;
+
+    display: flex;
+  flex-wrap: wrap;
     
 }
 
 .milestoneCard{
     margin: 5%;
    
+    flex-basis: 50%; /* Two cards per row */
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .milestones-list{
@@ -98,3 +105,22 @@
     margin-bottom: auto
 }
 
+@media (max-width: 768px) {
+    .milestones-container {
+        margin-top: 10%;
+      width: 100%;
+    }
+
+  .Cal2{
+    display: none;
+  }
+}
+
+.searchBar{
+    margin: auto;
+}
+
+.searchBar2{
+    margin-left: auto;
+    margin-right: auto;
+}

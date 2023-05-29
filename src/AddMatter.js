@@ -13,10 +13,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AddIcon from '@mui/icons-material/Add';
 
+import  {db, storage} from "./firebase"
+import {addDoc, collection } from "firebase/firestore"
+
 export default function AddMatter() {
   const [state, setState] = React.useState({
     bottom: false,
   });
+
+  const [matterTitle, setMatterTitle ] = React.useState()
+  const [trialDate, setTrialDate ] = React.useState()
 
 
   const toggleDrawer = (open) => (event) => {
@@ -34,6 +40,19 @@ export default function AddMatter() {
     >
     </Box>
   );
+
+  console.log(matterTitle)
+  console.log(trialDate)
+
+  const handleCreateMatter = async (e) => {
+    e.preventDefault()
+    await addDoc(collection(db,'matters'), {
+      title:matterTitle,
+      trialDate: trialDate
+    })
+
+    console.log("test")
+  }
 
 
   return (
@@ -53,13 +72,13 @@ export default function AddMatter() {
             <Paper className='drawerContainer' >
                 <div className='drawerContent'>
                     <h3>Add Matter</h3>
-                    <TextField className='drawerFields' id="outlined-basic" label="Matter Name" variant="outlined"/>
+                    <TextField onChange={ e => setMatterTitle(e.target.value)} className='drawerFields' id="outlined-basic" label="Matter Name" variant="outlined"/>
                     <br></br>
                     <br></br>
-                    <TextField className='drawerFields' id="outlined-basic" label="Other Fields" variant="outlined" />
+                    <TextField onChange={ e => setTrialDate(e.target.value)} className='drawerFields' id="outlined-basic" label="Other Fields" variant="outlined" />
                     <br></br>
                     <br></br>
-                    <Button>Submit</Button>
+                    <Button onClick={handleCreateMatter}>Submit</Button>
                 </div>
             </Paper>
                     

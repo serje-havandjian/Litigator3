@@ -8,6 +8,10 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
+import {query, collection, getDocs} from 'firebase/firestore'
+
+import {db} from "./firebase"
+
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -23,21 +27,38 @@ function App() {
 
 
 
-  const handleMatterDetail = (index) => {
+  const handleMatterDetail = (id) => {
     // setTrackIndex(parseInt(index.target.id));
-    history.push(`/casedetails/${index}`);
+    history.push(`/casedetails/${id}`);
 
-    console.log(index)
+    console.log(id, "CONSOLE LOG ID")
   };
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:5001/copilot-f86e2/us-central1/app/")
-      .then((response) => response.json())
-      .then((data) => setAllMatters(data))
-      .catch((error) => {
-        console.error("Error fetching matters:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/")
+  //     .then((response) => response.json())
+  //     .then((data) => setAllMatters(data))
+  //     .catch((error) => {
+  //       console.error("Error fetching matters:", error);
+  //     });
+  // }, []);
+  
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      let list = []
+      const q = query(collection(db, 'matters'))
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc)=>{
+        list.push({id: doc.id, ...doc.data() })
+      })
+      setAllMatters(list)
+     
+    }
+    
+    fetchData()
+    
+  }, [])
 
   console.log(allMatters)
  

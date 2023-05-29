@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
  res.send([
    {
        "id": 1,
-       "title": "Jeff vs. State of Kentucky",
+       "title": "Ryan vs. State of Kentucky",
        "trialDate": "5/27/23",
        "jurisdiction": {
            "id": 1,
@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
    },
    {
        "id": 4,
-       "title": "Jeff vs. Oregon, Missouri",
+       "title": "Ryan vs. Oregon, Missouri",
        "trialDate": "10/27/26",
        "jurisdiction": {
            "id": 3,
@@ -76,7 +76,7 @@ app.get('/', (req, res) => {
    },
    {
        "id": 5,
-       "title": "Jeff vs. State of Kentucky",
+       "title": "Ryan vs. State of Kentucky",
        "trialDate": "5/27/23",
        "jurisdiction": {
            "id": 1,
@@ -121,7 +121,7 @@ app.get('/', (req, res) => {
    },
    {
        "id": 8,
-       "title": "Jeff vs. Oregon, Missouri",
+       "title": "Ryan vs. Oregon, Missouri",
        "trialDate": "10/27/26",
        "jurisdiction": {
            "id": 3,
@@ -166,7 +166,7 @@ app.get('/', (req, res) => {
    },
    {
        "id": 11,
-       "title": "Jeff vs. Oregon, Missouri",
+       "title": "Ryan vs. Oregon, Missouri",
        "trialDate": "10/27/26",
        "jurisdiction": {
            "id": 3,
