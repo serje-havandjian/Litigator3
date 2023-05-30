@@ -205,8 +205,7 @@ const handleDrawerOpen = () => {
   if(thisMatter){
     return(
     <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
-      <DrawerHeader>
-        <Box  >
+      <>
           <CssBaseline />
           <AppBar position="fixed" open={open}>
             <Toolbar>
@@ -244,7 +243,7 @@ const handleDrawerOpen = () => {
           </div>
           </Toolbar>
           </AppBar>
-        </Box>
+        
 
         <Drawer variant="permanent" open={open}>
         <DrawerHeader>
@@ -277,48 +276,46 @@ const handleDrawerOpen = () => {
             </ListItem>
           ))}
         </List>
-
         </Drawer>
 
         <div className='milestones-container'>
-          <Box >
-            
-            <ul className='milestones-list'>
+          < Box sx={{ flexGrow: 1, p: 3 }} > 
+            <div className='milestones-list'>
               <Paper >
               <div className='milestoneCard'>
                 <h3>Demurrer</h3>
                 {displayMilestones}
               </div>           
-            </Paper>
-            <Paper>
-            <div className='milestoneCard'>
-                <h3>MSJ</h3>
-                {displayMilestones}
-              </div>
               </Paper>
               <Paper>
-            <div className='milestoneCard'>
-                <h3>MSJ</h3>
-                {displayMilestones}
-              </div>
-              </Paper>
-              <Paper>
-            <div className='milestoneCard'>
-                <h3>MSJ</h3>
-                {displayMilestones}
-              </div>
-              </Paper>
-            </ul>
+              <div className='milestoneCard'>
+                  <h3>MSJ</h3>
+                  {displayMilestones}
+                </div>
+                </Paper>
+                <Paper>
+              <div className='milestoneCard'>
+                  <h3>MSJ</h3>
+                  {displayMilestones}
+                </div>
+                </Paper>
+                <Paper>
+              <div className='milestoneCard'>
+                  <h3>MSJ</h3>
+                  {displayMilestones}
+                </div>
+                </Paper>
+            </div>
             
           </Box>
         </div>
       
   
    
-        <Box  className='Calendar Cal2' >
+        <Box className='Calendar Cal2' >
           <Calendar />
         </Box>
-      </DrawerHeader>
+      </>
  
     </Box>
       

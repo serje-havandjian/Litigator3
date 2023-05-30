@@ -82,22 +82,19 @@
 .milestones-container{
     margin-top: 5%;
     width: 30%;
-
-    display: flex;
-  flex-wrap: wrap;
     
 }
 
 .milestoneCard{
     margin: 5%;
    
-    flex-basis: 50%; /* Two cards per row */
+  
   padding: 10px;
   margin-bottom: 20px;
 }
 
 .milestones-list{
-    margin: 5%;
+margin-right: 5%;
 }
 
 .Cal2{
