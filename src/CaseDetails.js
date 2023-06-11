@@ -202,77 +202,14 @@ const goHome = () => {
   history.push(`/`);
 };
 
-useEffect(()=>{
-  const fetchData = async () => {
-    let list = []
-    const q = query(collection(db, 'Milestones'))
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc)=>{
-      list.push({id: doc.id, ...doc.data() })
-    })
-    setCaseMilestones(list)
-   
-  }
 
-  fetchData()
-  
-}, [])
-
-
-  useEffect(()=>{
-    const fetchData = async () => {
-      let list = []
-      const q = query(collection(db, 'Deadlines'))
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc)=>{
-        list.push({id: doc.id, ...doc.data() })
-      })
-      setDeadlines(list)
-    }
-    
-    fetchData()
-    
-  }, [])
-
-  
+  console.log(allMatters, "all matters in details")
   
  const thisCaseMilelstones = caseMilestones.map((milestone) =>{
   return (
     milestone.id
   )
  })
-
-
-
-//  let thisMilestone
-
-//  if(thisMatter && thisMatter.Deadlines){
-
-//     const matterDeadlines = thisMatter.Deadlines.map((deadline)=>{
-//     return deadline.id
-//     })
-//     console.log(matterDeadlines, "Deadlines for This Case")
- 
-//   // caseMilestones.find((milestone) => matterDeadlines.find((matterDeadline)=>{
-//   //    return matterDeadline === milestone
-//   // }))
-// }
-
- console.log(thisMatter, "THIS MATTER")
- 
- console.log(thisCaseMilelstones, "Milestones for This Case")
-
-
-  // const displayDeadlines = deadlines.map((deadline)=>{
-  //   if(deadline.find((thisdeadline)=> thisdeadline === deadline)){
-  //     return(
-  //       <li>{deadline}</li>
-  //     )
-  //   }
-  // })
-
-  // console.log(displayDeadlines)
-
 
 
 
@@ -294,6 +231,33 @@ useEffect(()=>{
 
 
   if(thisMatter){
+    console.log(thisMatter, "THISMATTER")
+    const displayDeadlinesMilestones = thisMatter.Deadlines.map((deadline)=>{
+      return(
+<div className='milestones-container'>
+          < Box sx={{ flexGrow: 1, p: 3 }} > 
+            <div className='milestones-list'>
+              <Paper >
+              <div className='milestoneCard'>
+                <h3>{deadline.Title}</h3>
+                {deadline.Milestones.map((milestone)=>{
+                  return(
+                    <>
+                    {milestone.Title}
+                    <br />
+                    {milestone.Milestones}
+                    </>
+                  )
+                })}
+              </div>           
+              </Paper>
+            </div>
+            
+          </Box>
+        </div>
+      )
+    })
+
     return(
     <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
       <>
@@ -369,37 +333,7 @@ useEffect(()=>{
         </List>
         </Drawer>
 
-        <div className='milestones-container'>
-          < Box sx={{ flexGrow: 1, p: 3 }} > 
-            <div className='milestones-list'>
-              <Paper >
-              <div className='milestoneCard'>
-                <h3>Demurrer</h3>
-                {displayMilestones}
-              </div>           
-              </Paper>
-              <Paper>
-              <div className='milestoneCard'>
-                  <h3>MSJ</h3>
-                  {displayMilestones}
-                </div>
-                </Paper>
-                <Paper>
-              <div className='milestoneCard'>
-                  <h3>MSJ</h3>
-                  {displayMilestones}
-                </div>
-                </Paper>
-                <Paper>
-              <div className='milestoneCard'>
-                  <h3>MSJ</h3>
-                  {displayMilestones}
-                </div>
-                </Paper>
-            </div>
-            
-          </Box>
-        </div>
+        {displayDeadlinesMilestones}
       
   
    

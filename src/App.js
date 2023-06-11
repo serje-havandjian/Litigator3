@@ -31,68 +31,77 @@ function App() {
   const handleMatterDetail = (id) => {
     // setTrackIndex(parseInt(index.target.id));
     history.push(`/casedetails/${id}`);
-
-    console.log(id, "CONSOLE LOG ID")
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8000/")
-  //     .then((response) => response.json())
-  //     .then((data) => setAllMatters(data))
-  //     .catch((error) => {
-  //       console.error("Error fetching matters:", error);
-  //     });
-  // }, []);
   
 
   useEffect(() => {
     const fetchData = async () => {
-      let list = [];
+      const list = [];
       const q = query(collection(db, 'matters'));
       const querySnapshot = await getDocs(q);
-      
-      querySnapshot.forEach(async (doc) => {
+  
+      for (const doc of querySnapshot.docs) {
         const matter = { id: doc.id, ...doc.data() };
-        
+  
         if (matter.Deadlines) {
-          const deadlines = [];
-          
-          for (const deadlineRef of matter.Deadlines) {
-            const deadlineSnapshot = await getDoc(deadlineRef);
-            const deadlineData = deadlineSnapshot.data();
-            
-            if (deadlineData) {
-              deadlines.push({ id: deadlineSnapshot.id, ...deadlineData });
-            }
-          }
-          
+          const deadlines = await Promise.all(
+            matter.Deadlines.map(async (deadlineRef) => {
+              const deadlineSnapshot = await getDoc(deadlineRef);
+              const deadlineData = deadlineSnapshot.data();
+  
+              if (deadlineData) {
+                const milestones = [];
+  
+                if (deadlineData.Milestones) {
+                  await Promise.all(
+                    deadlineData.Milestones.map(async (milestoneRef) => {
+                      const milestoneSnapshot = await getDoc(milestoneRef);
+                      const milestoneData = milestoneSnapshot.data();
+  
+                      if (milestoneData) {
+                        milestones.push({ id: milestoneSnapshot.id, ...milestoneData });
+                      }
+                    })
+                  );
+                }
+  
+                deadlineData.Milestones = milestones;
+              }
+  
+              return { id: deadlineSnapshot.id, ...deadlineData };
+            })
+          );
+  
           matter.Deadlines = deadlines;
         }
-        
+  
         list.push(matter);
-      });
-      
+      }
+  
       setAllMatters(list);
     };
-    
+  
     fetchData();
   }, []);
   
-  console.log(allMatters)
   
+  
+  
+
  
 
+    console.log(allMatters, "TESTTTT")
+  
 
-  useEffect(() => {
-    if (trackIndex !== null && allMatters.length > 0) {
-      const thisMatter = allMatters[trackIndex];
+
+  // useEffect(() => {
+  //   if (trackIndex !== null && allMatters.length > 0) {
+  //     const thisMatter = allMatters[trackIndex];
      
-    }
-  }, [trackIndex, allMatters]);
+  //   }
+  // }, [trackIndex, allMatters]);
  
-
-
-
 
 
 
