@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-import {query, collection, getDocs} from 'firebase/firestore'
+import {query, collection, getDocs, getDoc} from 'firebase/firestore'
 
 import {db} from "./firebase"
 
@@ -22,6 +22,7 @@ function App() {
   const [allMatters, setAllMatters] = useState([]);
   const [selectedMatter, setSelectedMatter] = useState(null);
   const [trackIndex, setTrackIndex ] = useState()
+  
 
   const history = useHistory()
 
@@ -44,32 +45,50 @@ function App() {
   // }, []);
   
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
-      let list = []
-      const q = query(collection(db, 'matters'))
+      let list = [];
+      const q = query(collection(db, 'matters'));
       const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc)=>{
-        list.push({id: doc.id, ...doc.data() })
-      })
-      setAllMatters(list)
-     
-    }
+      
+      querySnapshot.forEach(async (doc) => {
+        const matter = { id: doc.id, ...doc.data() };
+        
+        if (matter.Deadlines) {
+          const deadlines = [];
+          
+          for (const deadlineRef of matter.Deadlines) {
+            const deadlineSnapshot = await getDoc(deadlineRef);
+            const deadlineData = deadlineSnapshot.data();
+            
+            if (deadlineData) {
+              deadlines.push({ id: deadlineSnapshot.id, ...deadlineData });
+            }
+          }
+          
+          matter.Deadlines = deadlines;
+        }
+        
+        list.push(matter);
+      });
+      
+      setAllMatters(list);
+    };
     
-    fetchData()
-    
-  }, [])
-
+    fetchData();
+  }, []);
+  
   console.log(allMatters)
+  
  
 
 
-  // useEffect(() => {
-  //   if (trackIndex !== null && allMatters.length > 0) {
-  //     const thisMatter = allMatters[trackIndex];
+  useEffect(() => {
+    if (trackIndex !== null && allMatters.length > 0) {
+      const thisMatter = allMatters[trackIndex];
      
-  //   }
-  // }, [trackIndex, allMatters]);
+    }
+  }, [trackIndex, allMatters]);
  
 
 

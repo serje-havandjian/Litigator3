@@ -37,6 +37,13 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
+import {query, collection, getDocs, getDoc} from 'firebase/firestore'
+
+import {db} from "./firebase"
+
+
+
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -139,6 +146,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
+
+
+
+
 function CaseDetails({allMatters,trackIndex}) {
   const theme = useTheme();
   const history = useHistory()
@@ -173,6 +184,12 @@ function CaseDetails({allMatters,trackIndex}) {
   "title": "File And Serve Demurrer"
 }])
 
+const [caseMilestones, setCaseMilestones] = useState([]);
+const [deadlines, setDeadlines] = useState()
+
+const thisMatter = allMatters.find((matter) => matter.id === id);
+
+
 const handleDrawerClose = () => {
   setOpen(false);
 };
@@ -181,25 +198,99 @@ const handleDrawerOpen = () => {
   setOpen(true);
 };
 
+const goHome = () => {
+  history.push(`/`);
+};
+
+useEffect(()=>{
+  const fetchData = async () => {
+    let list = []
+    const q = query(collection(db, 'Milestones'))
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc)=>{
+      list.push({id: doc.id, ...doc.data() })
+    })
+    setCaseMilestones(list)
+   
+  }
+
+  fetchData()
+  
+}, [])
+
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      let list = []
+      const q = query(collection(db, 'Deadlines'))
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc)=>{
+        list.push({id: doc.id, ...doc.data() })
+      })
+      setDeadlines(list)
+    }
+    
+    fetchData()
+    
+  }, [])
+
+  
+  
+ const thisCaseMilelstones = caseMilestones.map((milestone) =>{
+  return (
+    milestone.id
+  )
+ })
+
+
+
+//  let thisMilestone
+
+//  if(thisMatter && thisMatter.Deadlines){
+
+//     const matterDeadlines = thisMatter.Deadlines.map((deadline)=>{
+//     return deadline.id
+//     })
+//     console.log(matterDeadlines, "Deadlines for This Case")
+ 
+//   // caseMilestones.find((milestone) => matterDeadlines.find((matterDeadline)=>{
+//   //    return matterDeadline === milestone
+//   // }))
+// }
+
+ console.log(thisMatter, "THIS MATTER")
+ 
+ console.log(thisCaseMilelstones, "Milestones for This Case")
+
+
+  // const displayDeadlines = deadlines.map((deadline)=>{
+  //   if(deadline.find((thisdeadline)=> thisdeadline === deadline)){
+  //     return(
+  //       <li>{deadline}</li>
+  //     )
+  //   }
+  // })
+
+  // console.log(displayDeadlines)
+
+
+
+
 
   let displayMilestones = []
 
   if(milestones){
     displayMilestones = milestones.map((milestone)=>{
       return(
-        
         <FormControlLabel control={<Checkbox defaultChecked />} label={milestone.title} />
       )
     })
   }
   
-  const goHome = () => {
-    history.push(`/`);
-  };
+ 
 
 
-  const thisMatter = allMatters.find((matter) => matter.id === id);
-
+ 
 
 
   if(thisMatter){

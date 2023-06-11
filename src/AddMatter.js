@@ -41,8 +41,6 @@ export default function AddMatter() {
     </Box>
   );
 
-  console.log(matterTitle)
-  console.log(trialDate)
 
   const handleCreateMatter = async (e) => {
     e.preventDefault()
@@ -51,7 +49,7 @@ export default function AddMatter() {
       trialDate: trialDate
     })
 
-    console.log("test")
+    
   }
 
 

@@ -60,7 +60,6 @@ function Matter({allMatters,setAllMatters, handleMatterDetail}) {
     
   }, [])
 
-  console.log(allMatters)
 
   let displayAllMatters
 
