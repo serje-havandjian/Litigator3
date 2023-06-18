@@ -155,39 +155,13 @@ function CaseDetails({allMatters,trackIndex}) {
   const history = useHistory()
   const { id } = useParams()
   const [open, setOpen] = React.useState(false);
-  const [milestones, setMilestones] = useState([{
-    "id": 1,
-    "title": "Analyze Complaint"
-},
-{
-  "id": 2,
-  "title": "Research Causes of Action and Grounds For Demurrer"
-},
-{
-  "id": 3,
-  "title": "Complete First Draft of Demurrer"
-},
-{
-  "id": 4,
-  "title": "Provide Demurrer To Partner"
-},
-{
-  "id": 5,
-  "title": "Provide Demurrer To Client"
-},
-{
-  "id": 6,
-  "title": "Finalize Request For Judicial Notice, Client Declaration, And Other Related Documents"
-},
-{
-  "id": 7,
-  "title": "File And Serve Demurrer"
-}])
+
 
 const [caseMilestones, setCaseMilestones] = useState([]);
 const [deadlines, setDeadlines] = useState()
 
 const thisMatter = allMatters.find((matter) => matter.id === id);
+console.log(thisMatter, "This Matter")
 
 
 const handleDrawerClose = () => {
@@ -205,60 +179,45 @@ const goHome = () => {
 
   console.log(allMatters, "all matters in details")
   
- const thisCaseMilelstones = caseMilestones.map((milestone) =>{
-  return (
-    milestone.id
-  )
- })
 
 
-
-
-  let displayMilestones = []
-
-  if(milestones){
-    displayMilestones = milestones.map((milestone)=>{
+  if(thisMatter && thisMatter.Deadlines){
+   
+    const displayDeadlines = thisMatter.Deadlines.map((deadline)=>{
+      
       return(
-        <FormControlLabel control={<Checkbox defaultChecked />} label={milestone.title} />
-      )
-    })
-  }
-  
- 
+        deadline.Milestones.map((milestone)=>{
 
-
- 
-
-
-  if(thisMatter){
-    console.log(thisMatter, "THISMATTER")
-    const displayDeadlinesMilestones = thisMatter.Deadlines.map((deadline)=>{
-      return(
-<div className='milestones-container'>
-          < Box sx={{ flexGrow: 1, p: 3 }} > 
+          console.log(milestone, "MILESTONE")
+          return(
+            <div className='milestones-container'>
+            < Box sx={{ flexGrow: 1, p: 3 }} > 
             <div className='milestones-list'>
-              <Paper >
-              <div className='milestoneCard'>
-                <h3>{deadline.Title}</h3>
-                {deadline.Milestones.map((milestone)=>{
-                  return(
-                    <>
-                    {milestone.Title}
-                    <br />
-                    {milestone.Milestones}
-                    </>
-                  )
-                })}
-              </div>           
-              </Paper>
+            <Paper >
+            <div className='milestoneCard'>
+            <h3>{milestone.Title}</h3>
+            <li>{milestone.Milestones}</li>
+          
             </div>
-            
-          </Box>
-        </div>
+            </Paper>
+            </div>
+            </Box>
+            </div>
+          )
+        })
+  
       )
+
+      
+  
+    
     })
+    
 
     return(
+
+      
+
     <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
       <>
           <CssBaseline />
@@ -333,9 +292,7 @@ const goHome = () => {
         </List>
         </Drawer>
 
-        {displayDeadlinesMilestones}
-      
-  
+        {displayDeadlines}
    
         <Box className='Calendar Cal2' >
           <Calendar />
@@ -344,8 +301,88 @@ const goHome = () => {
  
     </Box>
       
-    
- 
+    )
+  }else if (thisMatter){
+    return(
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
+        <>
+            <CssBaseline />
+            <AppBar position="fixed" open={open}>
+              <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                // onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: 5,
+                  height: 1,
+                  ...(open && { display: 'none' }),
+                }}
+              >
+                <MenuIcon />
+                </IconButton>
+              <div className='matterDetailsHeader'>
+                <Typography onClick={goHome}>
+                {thisMatter.title}
+                </Typography>
+              </div>
+              <Search className='searchBar'>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search…"
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+            <div className='copilotHeader'>
+              <Typography variant="h4">
+              copilot
+              </Typography>
+            </div>
+            </Toolbar>
+            </AppBar>
+          
+  
+          <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {['Calendar', 'Matters'].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {index % 2 === 0 ? <CalendarMonthIcon /> : <BalanceIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          </Drawer>
+          <Box className='Calendar Cal2' >
+            <Calendar />
+          </Box>
+        </>
+   
+      </Box>
     )
   }
   
