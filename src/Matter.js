@@ -22,7 +22,7 @@ import {query, collection, getDocs} from 'firebase/firestore'
 
 function Matter({allMatters,setAllMatters, handleMatterDetail}) {
 
-
+  console.log(allMatters, "ALL MATTERS HERE")
   
   const [hoverIndex, setHoverIndex] = useState(null);
 

@@ -37,6 +37,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
+
 import {query, collection, getDocs, getDoc} from 'firebase/firestore'
 
 import {db} from "./firebase"
@@ -44,33 +45,6 @@ import {db} from "./firebase"
 
 
 
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginRight: 240,
-    width: `calc(100% - ${240}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
-  // // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
 
 const drawerWidth = 200;
 
@@ -95,6 +69,32 @@ const closedMixin = (theme) => ({
   },
 });
 
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -145,20 +145,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-
-
-
-
-
 function CaseDetails({allMatters,trackIndex}) {
   const theme = useTheme();
   const history = useHistory()
   const { id } = useParams()
   const [open, setOpen] = React.useState(false);
 
+  const [test, setTest] = useState()
 
-const [caseMilestones, setCaseMilestones] = useState([]);
-const [deadlines, setDeadlines] = useState()
+
 
 const thisMatter = allMatters.find((matter) => matter.id === id);
 console.log(thisMatter, "This Matter")
@@ -174,51 +169,59 @@ const handleDrawerOpen = () => {
 
 const goHome = () => {
   history.push(`/`);
+  window.location.reload() 
 };
 
 
   console.log(allMatters, "all matters in details")
   
 
+  useEffect(() => {
 
-  if(thisMatter && thisMatter.Deadlines){
-   
-    const displayDeadlines = thisMatter.Deadlines.map((deadline)=>{
-      
-      return(
-        deadline.Milestones.map((milestone)=>{
-
-          console.log(milestone, "MILESTONE")
-          return(
-            <div className='milestones-container'>
-            < Box sx={{ flexGrow: 1, p: 3 }} > 
-            <div className='milestones-list'>
-            <Paper >
-            <div className='milestoneCard'>
-            <h3>{milestone.Title}</h3>
-            <li>{milestone.Milestones}</li>
-          
-            </div>
-            </Paper>
-            </div>
-            </Box>
-            </div>
-          )
-        })
+  },[])
   
-      )
-
-      
-  
+  if (thisMatter && thisMatter.Deadlines) {
+    const displayDeadlines = thisMatter.Deadlines.map((deadline) => {
     
-    })
+      return deadline.Milestones.map((milestone) => {
+        const displayEachM = milestone.Milestones.map((m) => {
+          return (
+            <>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox/>} label={m}>
+
+              </FormControlLabel>
+            
+            </FormGroup>
+            </>
+          )
+          
+        });
+        return (
+          <div >
+            <Box sx={{ flexGrow: 1, p: 2 }}>
+              <div className='milestones-list'>
+                <Paper>
+                  <div className='milestoneCard'>
+                    <h3>{milestone.Title}</h3>
+                    {displayEachM}
+                  </div>
+                </Paper>
+              </div>
+            </Box>
+          </div>
+        );
+      });
+    });
+  
+  
     
 
     return(
 
       
 
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', p: 1 }}>
       <>
           <CssBaseline />
           <AppBar position="fixed" open={open}>
@@ -226,7 +229,7 @@ const goHome = () => {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              // onClick={handleDrawerOpen}
+              onClick={handleDrawerOpen}
               edge="start"
               sx={{
                 marginRight: 5,
@@ -236,7 +239,7 @@ const goHome = () => {
             >
               <MenuIcon />
               </IconButton>
-            <div className='matterDetailsHeader'>
+            <div >
               <Typography onClick={goHome}>
               {thisMatter.title}
               </Typography>
@@ -250,18 +253,16 @@ const goHome = () => {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-          <div className='copilotHeader'>
-            <Typography variant="h4">
-            copilot
-            </Typography>
-          </div>
-          </Toolbar>
+            <div className='copilotHeader'>
+              <Typography variant="h4">
+              copilot
+              </Typography>
+            </div>
+            </Toolbar>
           </AppBar>
-        
-
         <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+        <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
@@ -292,7 +293,12 @@ const goHome = () => {
         </List>
         </Drawer>
 
+        <Box className='milestones-container' sx={{flexGrow:1}}>
         {displayDeadlines}
+        {/* {displayDeadlines}
+        {displayDeadlines}
+        {displayDeadlines} */}
+        </Box>
    
         <Box className='Calendar Cal2' >
           <Calendar />
@@ -300,19 +306,20 @@ const goHome = () => {
       </>
  
     </Box>
-      
     )
+
   }else if (thisMatter){
     return(
       <Box sx={{ display: 'flex', justifyContent: 'space-between', p:1 }}>
         <>
             <CssBaseline />
+            <Box>
             <AppBar position="fixed" open={open}>
               <Toolbar>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                // onClick={handleDrawerOpen}
+                onClick={handleDrawerOpen}
                 edge="start"
                 sx={{
                   marginRight: 5,
@@ -343,7 +350,7 @@ const goHome = () => {
             </div>
             </Toolbar>
             </AppBar>
-          
+          </Box>
   
           <Drawer variant="permanent" open={open}>
           <DrawerHeader>
